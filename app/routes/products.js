@@ -53,6 +53,12 @@ router.delete('/delete/:id', function (req, response) {
         });
         })
     })
+router.put('/update/:id',function(req,res){
+        PROD.findOneAndUpdate({ _id: req.params.id}, req.body, {upsert:true}, function(err, doc){
+          if (err) return res.send(500, { error: err });
+          return res.send(req.body);
+      });
+          })
 module.exports = router;
 
 

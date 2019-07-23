@@ -4,7 +4,6 @@ var EMPS = require('../models/emp.model')
 router.get('/all', function (req, res) {
     EMPS.find()
         .then(results => {
-            console.log(results)
             res.send(results);
         }).catch(err => {
             res.status(500).send({
@@ -13,7 +12,6 @@ router.get('/all', function (req, res) {
         });
 
 })
-
 router.get('/:id', function (req, res) {
     EMPS.findById(req.params.id)
         .then(results => {
@@ -21,12 +19,11 @@ router.get('/:id', function (req, res) {
             res.send(results);
         }).catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving employees by id."
+                message: err.message || "Some error occurred while retrieving products by id."
             });
         });
 
 })
-
 router.post('/add', function (req, response) {
     let ob =  new EMPS(req.body) 
   ob.save(function (err) {
@@ -49,21 +46,10 @@ router.delete('/delete/:id', function (req, response) {
         })
     
 })
-
 router.put('/update/:id',function(req,res){
-    var mObj=new EMPS(req.body);
-    var upsertData=mObj.toObject()
-    EMPS.update({_id: req.params.id}, upsertData, {upsert: false},function(err){
-        if(err)
-       res.json(err)
-        else{
-            res.send({
-message:'employee updated',
-data:req.params.id
-            })
-        }
-    }
-
-    );
-})
+  EMPS.findOneAndUpdate({ _id: req.params.id}, req.body, {upsert:true}, function(err, doc){
+    if (err) return res.send(500, { error: err });
+    return res.send(req.body);
+});
+    })
 module.exports = router;

@@ -2,13 +2,7 @@ var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/navinocart')
-    .then(() => {
-        console.log('Database connection successful')
-    })
-    .catch(err => {
-        console.error('Database connection error')
-    })
+mongoose.connect('mongodb+srv://oppo:oppo@learn-mongo-db-xcn8m.mongodb.net/test?retryWrites=true&w=majority')
 app.use(bodyParser.json())
 app.get('/', function (req, res) {
     res.send('succefully connected to server')
@@ -18,4 +12,4 @@ app.get('/', function (req, res) {
 app.use('/employees',require('./app/routes/employees'))
 app.use('/products',require('./app/routes/products'))
 app.use('/users',require('./app/routes/users'))
-app.listen(3000)
+app.listen(8080)
