@@ -1,20 +1,38 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var validater=require('email-validator')
 var UserSch = new Schema({
-
-  // user = foreignKey
-  username:{ 
+username:{ 
     type:String,
+    required: [true, 'user name is required'],
     unique:true
   },
-  password: String,
+  password:{
+  type: String,
+  required: [true, 'password is required']
+},
   email: {
    type: String,
-   unique:true
+   required: [true, 'email is required'],
+   unique:true,
+validate:{
+  validator:function(v){
+  if(validater.validate(v))
+  {
+    console.log('email is valid=>'+v)
+}
+  else
+  {
+    console.log('invalid email')
+throw Error('email syntax is incorrect!')
+}
+  }
+}
   },
   first_name: String,
   last_name: String,
   status: Boolean,
   is_deleted: Boolean,
 });
+
 module.exports = mongoose.model('users', UserSch);
