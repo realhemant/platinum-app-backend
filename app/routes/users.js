@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 var mc=require('../controllers/user.controller')
-var USERS = require('../models/user.model')
-
 
 router.get('/all', function (req, res) {
 mc.findAll(req,res)

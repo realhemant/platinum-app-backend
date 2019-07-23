@@ -12,7 +12,6 @@ const PROD=require('../models/product.model')
 
 
 exports.findOne=((req,res)=>{
-    router.get('/:id', function (req, res) {
         PROD.findById(req.params.id)
             .then(results => {
                 console.log(results)
@@ -23,7 +22,6 @@ exports.findOne=((req,res)=>{
                 });
             });
     
-    })
 })
    
 exports.create=((req,res)=>{
@@ -32,9 +30,9 @@ exports.create=((req,res)=>{
         if (err)
           { 
            var n=err.message.search("Path");
-           response.send(err.message.substring(n))
+           res.send(err.message.substring(n))
         }
-        response.json({
+        res.json({
             message: 'New user created!',
             data: ob
         });
@@ -44,8 +42,8 @@ exports.create=((req,res)=>{
 exports.delete=((req,res)=>{
     PROD.deleteOne({ _id: req.params.id }, function (err) {
         if (err)
-            response.json(err);
-        response.json({
+            res.json(err);
+        res.json({
             message: 'user deleted',
             data: req.params.id
         });
