@@ -1,4 +1,6 @@
 const USERS=require('../models/user.model')
+var jwt=require('jsonwebtoken')
+
    exports.findAll=((req,res)=>{
     USERS.find()
     .then(results => {
@@ -38,7 +40,28 @@ exports.create=((req,res)=>{
         });
     })
 })
-    
+exports.register=((req,res)=>{
+    let ob = new USERS(req.body)
+    ob.save(function (err) {
+        if (err)
+          { 
+           var n=err.message.search("Path");
+           res.send(err.message.substring(n))
+        }
+        jwt.sign({ob},"secretkey",(err,token)=>{
+res.json({
+    data:ob,
+    token:token
+})
+        })
+        // res.json({
+        //     message: 'New user created!',
+        //     data: ob
+        // });
+
+
+    })
+})
 exports.delete=((req,res)=>{
     USERS.deleteOne({ _id: req.params.id }, function (err) {
         if (err)
@@ -55,5 +78,4 @@ exports.update=((req,res)=>{
         return res.send(req.body);
     });
 })
-
 

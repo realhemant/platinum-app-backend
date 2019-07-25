@@ -18,5 +18,5 @@ router.delete('/delete/:id', function (req, res) {
 })
 router.put('/update/:id',function(req,res){
        mc.update(req,res)
-      })
+      })  
 module.exports = router;
