@@ -19,14 +19,6 @@ app.use('/employees', require('./app/routes/employees'))
 app.use('/products', require('./app/routes/products'))
 app.use('/users', require('./app/routes/users'))
 
-
-
-
-
-
-
-
-
-
-
 app.listen(8080)
+
+// Gau
