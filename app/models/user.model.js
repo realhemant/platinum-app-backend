@@ -17,13 +17,8 @@ username:{
    unique:true,
 validate:{
   validator:function(v){
-  if(validater.validate(v))
-  {
-    console.log('email is valid=>'+v)
-}
-  else
-  {
-    console.log('invalid email')
+  if(!validater.validate(v))
+{
 throw Error('email syntax is incorrect!')
 }
   }
@@ -33,6 +28,7 @@ throw Error('email syntax is incorrect!')
   last_name: String,
   status: Boolean,
   is_deleted: Boolean,
+  salt:String
 });
 
 module.exports = mongoose.model('users', UserSch);

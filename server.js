@@ -7,6 +7,16 @@ var USERS=require('./app/models/user.model')
 var EMP=require('./app/models/emp.model')
 
 mongoose.connect('mongodb+srv://oppo:oppo@learn-mongo-db-xcn8m.mongodb.net/test?retryWrites=true&w=majority')
+.then(success=>{}).catch(failure=>{
+  console.log(failure)
+  process.exit(0)
+})
+
+var db=mongoose.connection;
+db.on('error',console.error.bind(console))
+db.once('open',()=>{
+    console.log('connected to database')
+})
 app.use(bodyParser.json())
 
 app.use(function(req, res, next) {
@@ -20,5 +30,3 @@ app.use('/products', require('./app/routes/products'))
 app.use('/users', require('./app/routes/users'))
 
 app.listen(8080)
-
-// Gau

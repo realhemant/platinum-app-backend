@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 var jwt = require('jsonwebtoken')
-
+var bcrypt = require('bcrypt')
 var mc = require('../controllers/user.controller')
-
+const USERS = require('../models/user.model')
 router.get('/all', function (req, res) {
     mc.findAll(req, res)
 })
@@ -23,24 +23,36 @@ router.put('/update/:id', function (req, res) {
     mc.update(req, res)
 })
 router.post('/register', function (req, res) {
-   mc.register(req,res)
-}) 
+    mc.register(req, res)
+})
 router.post('/login', function (req, res) {
-    const USERS=require('../models/user.model')
 
-    USERS.find(req.body)
-    .then(notes => {
-        jwt.sign({ notes }, "secretkey", (err, token) => {
-            res.json({
-                data: notes,
-                token: token
-    
-            })
+    USERS.find({ username : req.body.username})
+        .then(results => {
+            console.log(results.username)
+            if (results && results.length == 1) {
+                
+                        bcrypt.compare(req.body.password, results[0].password, function (err, isPasswordMatch) {
+                          
+                          console.log(isPasswordMatch)
+                            if (isPasswordMatch) {
+                                jwt.sign({ results }, "secretkey", (err, token) => {
+                                    res.json({
+                                        data: results,
+                                        token: token
+                                    })
+                                })
+                            }
+                            else
+                                res.send("wrong password")
+                        });
+                    }
+             
+            else
+                res.send("Do not match any accout?")
         })
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving notes."
-        });
-    });
+        .catch(err => {
+            res.json(err)
+        })
 })
 module.exports = router;
