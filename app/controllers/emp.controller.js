@@ -1,6 +1,5 @@
 const EMPS = require('../models/emp.model')
 
-
 exports.findAll = ((req, res) => {
     EMPS.find()
         .then(results => {
@@ -14,10 +13,8 @@ exports.findAll = ((req, res) => {
 
 
 exports.findOne = ((req, res) => {
-
     EMPS.findById(req.params.id)
         .then(results => {
-            console.log(results)
             res.send(results);
         }).catch(err => {
             res.status(500).send({
@@ -34,7 +31,7 @@ exports.create = ((req, res) => {
             res.send(err.message.substring(n))
         }
         res.json({
-            message: 'New user created!',
+            message: 'New Employee created!',
             data: ob
         });
     })
@@ -45,7 +42,7 @@ exports.delete = ((req, res) => {
         if (err)
             res.json(err);
         res.json({
-            message: 'user deleted',
+            message: 'Employee deleted',
             data: req.params.id
         });
     })

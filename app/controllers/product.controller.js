@@ -14,7 +14,6 @@ const PROD=require('../models/product.model')
 exports.findOne=((req,res)=>{
         PROD.findById(req.params.id)
             .then(results => {
-                console.log(results)
                 res.send(results);
             }).catch(err => {
                 res.status(500).send({
@@ -33,7 +32,7 @@ exports.create=((req,res)=>{
            res.send(err.message.substring(n))
         }
         res.json({
-            message: 'New user created!',
+            message: 'New product created!',
             data: ob
         });
     })
@@ -44,7 +43,7 @@ exports.delete=((req,res)=>{
         if (err)
             res.json(err);
         res.json({
-            message: 'user deleted',
+            message: 'product deleted',
             data: req.params.id
         });
     })

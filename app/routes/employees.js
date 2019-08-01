@@ -3,14 +3,12 @@ const router = express.Router();
 var mc = require('../controllers/emp.controller')
 var jwt = require('jsonwebtoken')
 
-
 router.get('/all', verifyToken, function (req, res) {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if (err)
             res.sendStatus(403)
         else {
             mc.findAll(req, res)
-
         }
     })
 })
@@ -24,7 +22,6 @@ router.get('/:id', verifyToken, function (req, res) {
             res.sendStatus(403)
         else {
             mc.findOne(req, res)
-
         }
     })
 })
@@ -36,8 +33,6 @@ router.delete('/delete/:id', function (req, res) {
 router.put('/update/:id', function (req, res) {
     mc.update(req, res)
 })
-
-
 
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization']
@@ -51,9 +46,5 @@ function verifyToken(req, res, next) {
         res.sendStatus(403)
     }
 }
-function verifyUser(req, res, next) {
-    console.log('verifyUser is calling')
-}
-
 
 module.exports = router;
