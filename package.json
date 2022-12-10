@@ -20,7 +20,7 @@
     "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
     "email-validator": "^2.0.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-flash-messages": "^0.1.1",
     "express-session": "^1.16.2",
     "jsonwebtoken": "^8.5.1",
